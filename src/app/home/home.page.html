@@ -1,0 +1,41 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title class="ion-text-center">
+      Catálogo de Productos
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Catálogo de Productos</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-list>
+    <ion-item>
+      <ion-label>Categoría</ion-label>
+      <ion-select placeholder="Selecciona una categoría" [(ngModel)]="selectedCategoria" (ionChange)="onCategoriaChange()">
+        <ion-select-option *ngFor="let categoria of categoriasFromService" [value]="categoria">
+          {{ categoria.descripcion }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+
+  <ion-list *ngIf="productosFromService.length > 0">
+    <ion-item *ngFor="let producto of productosFromService" (click)="verDetallesProducto(producto)">
+      <ion-thumbnail slot="start">
+        <img [src]="'https://www.hostcatedral.com/api/appNoti/public/img/' + producto.img" alt="Imagen de {{ producto.titulo }}">
+      </ion-thumbnail>
+      <ion-label>
+        <h2>{{ producto.titulo }}</h2>
+        <p>{{ producto.descripcion }}</p>
+        <p>Precio: {{ producto.precio }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <p *ngIf="productosFromService.length === 0" class="ion-text-center ion-margin-top">Selecciona una categoria porfavor :).</p>
+</ion-content>
